@@ -4,6 +4,7 @@ const Product = require('./models/product.model.js');
 const app = express()
 
 app.use(express.json());
+app.use(express.urlencoded({extended:false}));
 
 
 app.get('/',(req,res)=>{
@@ -58,6 +59,26 @@ app.put('/api/products/:id',async(req,res)=>{
         res.status(500).json({message:error.message});
     }
 });
+
+//delete a product
+
+app.delete('/api/products/:id',async(req,res)=>{
+    try{
+        const {id} = req.params;
+        const product=await Product.findByIdAndDelete(id);
+        if(!product){
+        return res.status(404).json({message:"product not found"});
+        }
+        
+        res.status(200).json({message:"Product deleted successfully"});
+
+
+    }catch(error){
+        res.status(500).json({message:error.message});
+    }
+});
+
+
 
 
 mongoose.connect("mongodb+srv://admin225:3wMEbKEX3T68mnwy@backenddb.difes2w.mongodb.net/Node-API?retryWrites=true&w=majority&appName=BackendDB")

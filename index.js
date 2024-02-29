@@ -7,5 +7,5 @@ console.log("server is running");
 });
 
 app.get('/',(req,res)=>{
-    res.send("hello from node api");
+    res.send("hello from this is node api updated");
 });
